@@ -1,0 +1,54 @@
+apiVersion: openliberty.io/v1beta1
+kind: OpenLibertyApplication
+metadata:
+  name: {{.COMPONENT_NAME}}
+spec:
+  # Add fields here
+  monitoring:
+    endpoints:
+    - basicAuth:
+        password:
+          key: password
+          name: mysecret
+        username:
+          key: username
+          name: mysecret
+      interval: 5s
+      tlsConfig:
+        insecureSkipVerify: true
+    labels:
+      monitoring: ''
+  env:
+  - name: STACK_USERNAME
+    valueFrom:
+      secretKeyRef:
+        key: username
+        name: mysecret
+  - name: STACK_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        key: password
+        name: mysecret
+  version: 1.0.0
+  applicationImage: {{.CONTAINER_IMAGE}}
+  service:
+    type: ClusterIP
+    port: 9080
+    annotations:
+      prometheus.io/scrape: 'true'
+  readinessProbe:
+    failureThreshold: 12
+    httpGet:
+      path: /health/ready
+      port: 9080
+    initialDelaySeconds: 5
+    periodSeconds: 2
+    timeoutSeconds: 1
+  livenessProbe:
+    failureThreshold: 12
+    httpGet:
+      path: /health/live
+      port: 9080
+    initialDelaySeconds: 5
+    periodSeconds: 2
+  expose: true

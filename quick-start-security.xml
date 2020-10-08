@@ -1,0 +1,3 @@
+<server>
+    <quickStartSecurity userName="${stack.username}" userPassword="${stack.password}" />
+</server>
