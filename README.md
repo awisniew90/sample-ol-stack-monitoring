@@ -1,6 +1,6 @@
-# sample-ol-stack-monitoring
+# Deploying and monitoring with the Open Liberty application stack
 
-This repository contains a custom Dockerfile and deployment yaml which can be used to build and deploy an Open Liberty stack application and connect it to Prometheus for monitoring.
+This sample repository contains a custom Dockerfile and app-deploy.yaml which can be used to build and deploy an Open Liberty stack application and connect it to Prometheus for monitoring.
 
 ## quick-start-security
 
