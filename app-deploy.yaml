@@ -1,7 +1,7 @@
 apiVersion: openliberty.io/v1beta1
 kind: OpenLibertyApplication
 metadata:
-  name: {{.COMPONENT_NAME}}
+  name: java-openliberty
 spec:
   # Add fields here
   monitoring:
@@ -30,7 +30,7 @@ spec:
         key: password
         name: mysecret
   version: 1.0.0
-  applicationImage: {{.CONTAINER_IMAGE}}
+  applicationImage: <CONTAINER_IMAGE>
   service:
     type: ClusterIP
     port: 9080
