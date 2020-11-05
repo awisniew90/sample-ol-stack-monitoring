@@ -1,6 +1,6 @@
-# sample-ol-stack-monitoring
+# Deploying and monitoring with the Open Liberty application stack
 
-This repository contains a custom Dockerfile and deployment yaml which can be used to build and deploy an Open Liberty stack application and connect it to Prometheus for monitoring.
+This sample repository contains a custom Dockerfile and app-deploy.yaml which can be used to build and deploy an Open Liberty stack application and connect it to Prometheus for monitoring.
 
 ## quick-start-security
 
@@ -28,18 +28,10 @@ env:
       name: mySecret
 ```
 
-<!-- ## HTTPS Port Configuration
-
-You will notice that the app-deploy.yaml is configured to use port 9443 rather than port 9080.
-
-```yaml
-port: 9443
-```
--->
 
 ## Service Monitor
 
-To allow for easy detection from Prometheus, this app defines a Service Monitor that will use the credentials from "mySecret" and the HTTPS port to connect to the deployment's /metrics endpoint.
+To allow for easy detection from Prometheus, this app defines a Service Monitor that will use the credentials from "mySecret" to connect to the deployment's /metrics endpoint.
 
 ```yaml
 monitoring:
@@ -52,12 +44,10 @@ monitoring:
         key: username
         name: mysecret
     interval: 5s
-    port: HTTPS
-    scheme: HTTPS
     tlsConfig:
       insecureSkipVerify: true
   labels:
-    app-monitoring: ''
+    monitoring: ''
 ```
 
-Prometheus may need to be configured to watch the namespace where this app is deployed, and the namespace will need to have the label "app-monitoring."
+Prometheus will need to be configured with the correct `serviceMonitorNamespaceSelector` to scrape the namespace where this app is deployed and also with the correct serviceMonitorSelector to scrape service monitors with the label "monitoring." 
